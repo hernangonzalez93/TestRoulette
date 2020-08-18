@@ -162,6 +162,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Mapper\ReadRoulette.cs" />
+    <Compile Include="Models\Bets.cs" />
     <Compile Include="Models\Roulette.cs" />
     <Compile Include="Services\RouletteService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

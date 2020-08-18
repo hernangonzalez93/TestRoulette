@@ -37,23 +37,50 @@ namespace TestRoulette.Controllers
             return RouletteService.CreateRoulette();
         }
 
-        [Route("OpenRoulette/{id}")]
-        public HttpResponseMessage OpenRoulette(int id)
+        [HttpPut]
+        [Route("api/OpenRoulette")]
+        public HttpResponseMessage OpenRoulette(Roulette roulette)
         {
+
             var response = Request.CreateResponse(HttpStatusCode.NotImplemented);
+
+            var res = RouletteService.OpenRoulette(roulette.Id);
+
+            if(res>=1)
+            {
+                response = Request.CreateResponse(HttpStatusCode.OK);
+            }
+            else
+            {
+                response = Request.CreateResponse(HttpStatusCode.NotModified);
+            }
+
 
             return response;
         }
 
-
-        // PUT: api/Roulette/5
-        public void Put(int id, [FromBody]string value)
+        [HttpPost]
+        [Route("api/CreateBet")]
+        public HttpResponseMessage CreateBet(HttpRequestMessage request, [FromBody] Bets bet)
         {
-        }
+            var response = Request.CreateResponse(HttpStatusCode.NotImplemented);
+            var headers = request.Headers;
+            var iduser = headers.GetValues("User");
+            bet.User_Id = Convert.ToInt32(iduser.FirstOrDefault());
+            var res = RouletteService.CreateBet(bet);
 
-        // DELETE: api/Roulette/5
-        public void Delete(int id)
-        {
+            if(res>=1)
+            {
+                response = Request.CreateResponse(HttpStatusCode.Created);
+            }
+            else
+            {
+                response = Request.CreateResponse(HttpStatusCode.BadRequest);
+            }
+
+
+            return response;
+
         }
     }
 }
