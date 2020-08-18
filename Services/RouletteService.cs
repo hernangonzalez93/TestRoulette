@@ -116,8 +116,28 @@ namespace TestRoulette.Models.Services
 
         }
 
+        public static List<Bets> GetBets(int id)
+        {
+            _conn = new SqlConnection(ConfigurationManager.ConnectionStrings["Roul"].ToString());
+            DataTable data = new DataTable();
+            var query = "select * from Bets where Roulette_Id="+id;
+            _adp = new SqlDataAdapter
+            {
+                SelectCommand = new SqlCommand(query, _conn)
+            };
+            _adp.Fill(data);
+            List<Bets> Bets = new List<Bets>(data.Rows.Count);
+            if (data.Rows.Count > 0)
+            {
+                foreach (DataRow bet in data.Rows)
+                {
+                    Bets.Add(new ReadBet(bet));
+                }
+            }
+
+            return Bets;
 
 
-
+        }
     }
 }

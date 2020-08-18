@@ -161,6 +161,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Mapper\ReadBet.cs" />
     <Compile Include="Mapper\ReadRoulette.cs" />
     <Compile Include="Models\Bets.cs" />
     <Compile Include="Models\Roulette.cs" />

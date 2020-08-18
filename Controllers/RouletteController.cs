@@ -15,8 +15,9 @@ namespace TestRoulette.Controllers
     {
 
 
-        // GET: api/Roulette
-        public IEnumerable<Roulette> Get()
+        [HttpGet]
+        [Route("api/GetRoulettes")]
+        public IEnumerable<Roulette> GetRoulettes()
         {
             List<Roulette> Roulettes = new List<Roulette>();
             Roulettes=RouletteService.GetRoulettes();
@@ -24,15 +25,9 @@ namespace TestRoulette.Controllers
             return Roulettes;
 
         }
-
-        // GET: api/Roulette/5
-        public string Get(int id)
-        {
-            return "value";
-        }
-
-        // POST: api/Roulette
-        public int Post([FromBody]string value)
+        [HttpPost]
+        [Route("api/CreateRoulette")]
+        public int CreateRoulette([FromBody]string value)
         {
             return RouletteService.CreateRoulette();
         }
@@ -82,5 +77,18 @@ namespace TestRoulette.Controllers
             return response;
 
         }
+
+        [HttpPost]
+        [Route("api/CloseRoulette")]
+        public IEnumerable<Bets> CloseBetsxRoulette(Roulette roulette)
+        {
+            List<Bets> Bets = new List<Bets>();
+
+            Bets = RouletteService.GetBets(roulette.Id);
+
+            return Bets;
+        }
+
+
     }
 }
