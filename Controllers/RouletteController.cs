@@ -4,6 +4,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Web;
 using System.Web.Http;
 using TestRoulette.Models;
 using TestRoulette.Models.Services;
@@ -31,9 +32,19 @@ namespace TestRoulette.Controllers
         }
 
         // POST: api/Roulette
-        public void Post([FromBody]string value)
+        public int Post([FromBody]string value)
         {
+            return RouletteService.CreateRoulette();
         }
+
+        [Route("OpenRoulette/{id}")]
+        public HttpResponseMessage OpenRoulette(int id)
+        {
+            var response = Request.CreateResponse(HttpStatusCode.NotImplemented);
+
+            return response;
+        }
+
 
         // PUT: api/Roulette/5
         public void Put(int id, [FromBody]string value)

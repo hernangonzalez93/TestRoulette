@@ -39,14 +39,35 @@ namespace TestRoulette.Models.Services
         }
 
 
-        public void CreateRoulette()
+        public static int CreateRoulette()
         {
             _conn = new SqlConnection(ConfigurationManager.ConnectionStrings["Roul"].ToString());
-
-
-            var query = new String("insert into Roulettes values ("{0}",null,1)",new DateTime)
-
-
+            DateTime OpenDate = DateTime.Now;
+            var query = "insert into Roulettes (Opening_Date,Closing_Date,State) values (@Opening_Date,@Closing_Date,@State)";
+            SqlCommand InsertCommand = new SqlCommand(query, _conn);
+            InsertCommand.Parameters.AddWithValue("@Opening_Date",OpenDate);
+            InsertCommand.Parameters.AddWithValue("@Closing_Date", ' ');
+            InsertCommand.Parameters.AddWithValue("@State", 0);
+            _conn.Open();
+            int result = InsertCommand.ExecuteNonQuery();
+            if(result >0)
+            {
+                var rouletteidquery = "select MAX(id) from Roulettes";
+                DataSet ds = new DataSet();
+                _adp = new SqlDataAdapter {
+                    SelectCommand = new SqlCommand(rouletteidquery, _conn)
+                };
+                _adp.Fill(ds);
+                DataRow row = ds.Tables[0].Rows[0];
+                var ids = row.ItemArray[0];
+           
+                return (int)ids;
+            }
+            else
+            {
+                return 0;
+            }
+            _conn.Close();
         }
 
 
